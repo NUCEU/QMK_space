@@ -1,0 +1,142 @@
+<footer id="footer">
+  <div class="utilMenu">
+    <ul>
+      <li><a href="">이용약관</a></li>
+      <!-- prettier-ignore -->
+      <li><a href=""><strong>개인정보보호정책</strong> </a></li>
+      <li><a href="">사이트맵</a></li>
+      <li><a href="">온라인견적문의</a></li>
+    </ul>
+  </div>
+  <div class="addressBox">
+    <div class="container">
+      <div class="fLogo">
+        <img src="../images/layout/fLogo.png" alt="" />
+      </div>
+      <div class="address">
+        <p class="title">하이탑 : 서울 송파구 성내천로 14길 13 (3층)</p>
+        <!-- prettier-ignore -->
+        <p class="info">
+          <span>대표전화 : 070-7715-4400</span>
+          <span>이메일 : hitop4400@hanmail.net</span>
+          <span>사업자번호 : 402-81-83259</span>
+        </p>
+        <p class="copyright">Copyright ⓒ 2018 HITOP. All rights reserved</p>
+      </div>
+      <!-- prettier-ignore -->
+      <div class="tel">
+        <span>고객만족센터</span>
+        <strong>070-7715-4400</strong>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  const btnAll = $(".btnAll");
+  const header = $("#header");
+  const depth01 = $('#gnb .depth01');
+  const depth02 = $('#gnb .depth02');
+
+  const lnbDepth01 = $("#lnb .depth01 ul");
+  const lnbDepth02 = $("#lnb .depth02 ul");
+
+  const lnbButton = $("#lnb .menu button")
+  const lnb = $("#lnb");
+
+  //let lnbTop = lnb.offset().top;
+  let lnbTop = 350;
+  console.log("🚀 ~ file: footer.html ~ line 48 ~ lnbTop", lnbTop)
+
+  lnbButton.on('click',function(){
+   // console.log(this);
+   if(header.hasClass("mobile")) {
+     const ul = $(this).next();
+     ul.slideToggle();
+   } 
+  });
+
+
+  // ctrl + alt + l   (콘솔)
+  // alt + shift + c  (주석)
+  // alt + shift + u  (주석삭제)
+  
+
+  //console.log("🚀 ~ file: footer.html ~ line 36 ~ btnAll", btnAll)//순수한 돔 요소를 가리킴
+  const btnAll02 = document.querySelector(".btnAll");
+ // console.log("🚀 ~ file: footer.html ~ line 38 ~ btnAll02", btnAll02)//배열의 0번으로 떨어짐
+  
+  //console.log(btnAll[0] === btnAll02); //값은 트루라고 나온다 
+  //콘솔 프로토타입 열어보면 - 부무한테 상속받았다는 뜼, 쓸수있는 속성이다 
+  
+  //btnAll.addClass("aaa");
+ // btnAll02.addClass("bbb"); //js를 통해서 찾은것은 오류난다 
+ // btnAll02.classList.add("bbb"); // js는 이렇게 해야 적용된다.
+  //그래서 둘은 접근방법 자체가 다르다
+  //그러나 js가 부모되는 개념이기때문에 js에서 접근이 불가능하면 제이쿼리에서도 불가능하다 
+  
+ 
+  btnAll.on("click",function(e){
+    //e.preventDefault(); //a reload effect 제거, 매개변수 e 도 있어야함,, 두번째 방법은 리턴을 씀 (리턴만나면 이후의 것은 실행안되기 때문임 , 쌤은 매개변수 e쓰기 싫어서 리턴문을 많이씀 - return false; )
+    header.toggleClass("open"); // . 을 안찍는다 함수의 리턴값을 잘보고 boolean인지 jquery 인지 확인하여 제이쿼리면 method chainning 을 할수있따
+    depth02.delay(500).slideUp();
+    return false; 
+  });
+
+  depth01.on("click", function(){
+    //mdn에는 slideToggle 없음. 제이쿼리만의 속성
+    if(header.hasClass("mobile")){
+      const depth02 = $(this).next();
+      depth02.slideToggle();
+      return false;
+    }
+    console.log(depth01);
+  });
+
+    //window가 최상위자 
+    // window.addEventListener("resize", function(){
+    //  console.log("vanila ===" ,window.innerWidth);  
+    //  const w = window.innerWidth;
+    //  if(w<1200){
+    //    //1200보다 작아지는 순간에 모바일로 적용되게 할거다 
+    //    header.addClass("mobile");
+    //  } else {
+    //    header.removeClass("mobile");
+    //  }
+    // });
+    //window.dispatchEvent(new Event("resize"));//제이쿼리 이벤트함수, 이벤트전파, 자동으로 일으키게함 
+    // window.addEventListener("resize", function(){
+    //  console.log("vanila ===" ,window.innerWidth);  
+     
+    // });
+    
+    $(window).on("resize", function(){ //window는 순수객체라서 따옴표치면 안됨 
+      console.log("jquery===" , $(window).width()); //스크롤바를 포함 하지 않음 서로 width가 다름 
+      const w = $(window).outerWidth(); //그냥 Width는 스크를바(17px)를 포함 하기때문에 otherWidth씀 
+      console.log("🚀 ~ file: footer.html ~ line 90 ~ $ ~ w", w)
+      if (w<=1200) {
+        //1200보다 작아지는 순간에 모바일로 적용되게 할거다 
+        header.addClass("mobile");
+      } else {
+        header.removeClass("mobile open");
+        depth02.removeAttr("style");
+        lnbDepth01.removeAttr("style");
+        lnbDepth02.removeAttr("style");
+      
+      }
+  
+    });
+    $(window).on("scroll",function(){
+      const st = $(window).scrollTop();
+      if(st>lnbTop){
+        lnb.addClass("fixed");
+     }else{
+       lnb.removeClass("fixed")
+     }
+    })
+    
+    $(window).trigger("resize"); //이벤트를 실행. 발생시킬수있따 
+
+
+</script>
+</body>
+</html>

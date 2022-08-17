@@ -1,0 +1,526 @@
+@import 'vars';
+@import 'mixin';
+
+body {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-size: $font-normal;
+  color: $font-color;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  background: none;
+  border: none;
+  outline: none;
+}
+.container {
+  width: 1200px;
+  position: relative;
+  margin: 0 auto;
+}
+#header {
+  width: 100%;
+  position: absolute;
+  z-index: 99;
+  color: #fff;
+  &:after {
+    width: 100%;
+    height: 1px;
+    top: 100px;
+    background-color: #fff;
+    pointer-events: none;
+    @include pseudo;
+  }
+  .container {
+    display: flex;
+    justify-content: center;
+    position: static; // position default;
+    max-width: 1920px;
+  }
+  #logo {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    left: 50px;
+    z-index: 2;
+  }
+  .online {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    position: absolute;
+    top: 20px;
+    right: 50px;
+    padding: 0 30px;
+    border: 2px solid #fff;
+    border-radius: 100px;
+    box-sizing: border-box;
+  }
+  #gnb {
+    .list {
+      display: flex;
+      > li {
+        position: relative;
+
+        .depth01 {
+          display: flex;
+          align-items: center;
+          height: 100px;
+          position: relative;
+          padding: 0 50px;
+          font-size: 20px;
+          font-weight: 500;
+          &:after {
+            height: 2px;
+            right: 20px;
+            bottom: 0;
+            left: 20px;
+            transform: scaleX(0);
+            transition: transform 0.25s ease-in-out;
+            background-color: #fff;
+            @include pseudo;
+          }
+        }
+        .depth02 {
+          padding: 30px 10px;
+          text-align: center;
+          color: #fff;
+          background-color: $main-color;
+          border-radius: 0 0 10px 10px;
+          display: none;
+          li {
+            a {
+              display: block;
+              padding: 10px 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  .btnAll {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100px;
+    width: 100px;
+    padding: 0;
+    display: none;
+    span {
+      display: block;
+      width: 50px;
+      height: 2px;
+      background-color: #fff;
+      position: absolute;
+      left: 25px;
+      transition: all 0.25s ease;
+      &:nth-child(1) {
+        top: 34px;
+      }
+      &:nth-child(2) {
+        top: 49px;
+      }
+      &:nth-child(3) {
+        top: 64px;
+      }
+    }
+  }
+  &.open {
+    #gnb {
+      right: 0;
+    }
+    .btnAll {
+      span {
+        &:nth-child(1) {
+          top: 49px;
+          transform: rotate(45deg);
+        }
+        &:nth-child(2) {
+          left: -30px;
+          opacity: 0;
+        }
+        &:nth-child(3) {
+          top: 49px;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+  }
+}
+#footer {
+  color: #ccc;
+  background-color: #333;
+  .utilMenu {
+    border-bottom: 1px solid #666;
+    ul {
+      display: flex;
+      justify-content: center;
+      //padding: 20px 0;
+      li {
+        &:nth-child(1) a:before {
+          display: none;
+        }
+        a {
+          display: block;
+          position: relative;
+          padding: 20px 30px;
+
+          &:before {
+            width: 1px;
+            height: 14px;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            background-color: #666;
+            @include pseudo;
+          }
+        }
+      }
+    }
+  }
+  .addressBox {
+    padding: 50px 0;
+    .container {
+      display: flex;
+      .address {
+        margin-left: 50px;
+        .info {
+          margin: 10px 0 30px;
+          span {
+            margin-right: 20px;
+          }
+        }
+        .copyright {
+          color: #666;
+        }
+      }
+      .tel {
+        display: flex;
+        flex-direction: column;
+        margin-left: auto;
+        strong {
+          margin-top: 10px;
+          font-size: $font-large / 1.25;
+          letter-spacing: -0.02em;
+        }
+      }
+    }
+  }
+}
+
+// mobile - first
+
+// responsive
+@media all and (min-width: 1199px) {
+  //min-width 는 1199px 보다 작을떄만 !
+  #header {
+    #gnb {
+      .list {
+        > li {
+          &:hover {
+            .depth01 {
+              background-color: $main-color;
+              &:after {
+                transform: scaleX(1);
+              }
+            }
+            .depth02 {
+              display: block !important;
+            }
+          }
+          .depth02 {
+            padding: 30px 10px;
+            text-align: center;
+            color: #fff;
+            background-color: $main-color;
+            border-radius: 0 0 10px 10px;
+            display: none;
+            li {
+              a {
+                display: block;
+                padding: 10px 0;
+                &:hover {
+                  box-shadow: inset 0 0 3px 3px rgba(0, 0, 0, 0.05);
+                  background-color: darken($main-color, 10);
+                  border-radius: 5px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 1400px) {
+  #header {
+    #logo {
+      left: 20px;
+    }
+    #gnb {
+      .list {
+        > li {
+          .depth01 {
+            padding: 0 40px;
+          }
+        }
+      }
+    }
+    .online {
+      right: 20px;
+    }
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .container {
+    width: 100%;
+  }
+  #header {
+    #gnb {
+      width: 100%;
+      height: 100vh;
+      padding-top: 100px;
+      flex-grow: 1;
+      position: fixed;
+      top: 0;
+      background-color: $main-color;
+      right: -100%;
+      transition: right 0.5s ease-in-out;
+      .list {
+        flex-direction: column;
+        align-items: stretch;
+        > li {
+          .depth01 {
+            width: 100%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+          }
+          .depth02 {
+            background-color: darken($main-color, 10);
+            a {
+              display: block;
+              padding: 15px 0 15px 15px;
+              position: relative;
+              text-align: left;
+              &::before {
+                content: '';
+                display: block;
+                width: 3px;
+                height: 3px;
+                background-color: #fff;
+                left: 40;
+                top: 50%;
+                transform: translateY(-50%);
+                position: absolute;
+              }
+            }
+          }
+        }
+      }
+    }
+    .online {
+      right: 100px;
+    }
+    .btnAll {
+      display: block;
+    }
+  }
+  #footer {
+    .addressBox {
+      .container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        .address {
+          margin: 50px 0;
+        }
+        .tel {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 1024px) {
+  #header {
+    height: 60px;
+    &:after {
+      top: 60px;
+    }
+    #logo {
+      height: 60px;
+      img {
+        height: 30px;
+      }
+    }
+    #gnb {
+      padding-top: 60px;
+      > li {
+        .depth01 {
+          height: 60px;
+          font-size: 18px;
+        }
+        .depth02 {
+          font-size: 14px;
+        }
+      }
+    }
+    .online {
+      height: 30px;
+      font-size: 12px;
+      padding: 0 15px;
+      top: 15px;
+      right: 60px;
+    }
+    .btnAll {
+      width: 60px;
+      height: 60px;
+      span {
+        width: 30px;
+        left: 15px;
+        &:nth-child(1) {
+          top: 19px;
+        }
+        &:nth-child(2) {
+          top: 29px;
+        }
+        &:nth-child(3) {
+          top: 39px;
+        }
+      }
+    }
+    &.open {
+      .btnAll {
+        span {
+          &:nth-child(1) {
+            top: 29px;
+          }
+          &:nth-child(3) {
+            top: 29px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 640px) {
+  #footer {
+    .utilMenu {
+      ul {
+        font-size: 12px;
+        li {
+          a {
+            padding: 20px 20px;
+          }
+        }
+      }
+    }
+    .addressBox {
+      .fLogo {
+        img {
+          height: 60px;
+        }
+      }
+      .container {
+        .address {
+          margin: 30px 0;
+          font-size: 14px;
+          .info {
+            display: flex;
+            flex-direction: column;
+            span {
+              margin: 5px 0;
+              display: block;
+              margin-right: 0;
+            }
+          }
+        }
+        .tel {
+          strong {
+            font-size: 24px;
+          }
+        }
+      }
+    }
+  }
+}
+@media all and (max-width: 480px) {
+  #footer {
+    .utilMenu {
+      ul {
+        li {
+          a {
+            padding: 20px 15px;
+            letter-spacing: -0.05em;
+          }
+        }
+      }
+    }
+  }
+}
+
+//1024보다 작아지면 headrer 60으로 줄이고
+
+.notFound {
+  background-color: #000;
+  display: flex;
+  width: 100vw;
+  height: 100vw;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 600px;
+  }
+}
+
+.home {
+  a {
+    display: inline-block;
+    padding: 20px 40px;
+    background-color: $main-color;
+    border-radius: 100px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+  }
+}
+
+.error {
+  background-color: #000;
+  display: flex;
+  width: 100vw;
+  height: 100vw;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  p {
+    color: #fff;
+    text-align: center;
+    font-size: 48px;
+  }
+
+  img {
+    width: 500px;
+  }
+  .home {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    a {
+      display: inline-block;
+      padding: 20px 40px;
+      background-color: #f00;
+      border-radius: 100px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+  }
+}
